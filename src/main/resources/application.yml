@@ -1,0 +1,67 @@
+
+server:
+  port: 8089
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/lq?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: lqstar
+    password: lan64602361
+    druid:
+      db-type: com.alibaba.druid.pool.DruidDataSource
+      initial-size: 3
+      min-idle: 3
+      max-active: 18
+      max-wait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      validation-query: SELECT 1 FROM dual
+      filter: stat,wall,log4j
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: true
+#  mvc:
+#    view:
+#      suffix: .*
+#      prefix: /templates/
+#      static-path-pattern: /static/**
+  thymeleaf:
+    mode: HTML5
+    encoding: utf-8
+    servlet:
+      content-type: text/html
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+  resources:
+    static-locations: classpath:/
+#  redis:
+#    host: localhost
+#    database: 0
+#    port: 6379
+#    jedis:
+#      pool:
+#        max-active: 8
+#        max-idle: 8
+#        min-idle: 0
+#    password: 123456
+  rabbitmq:
+    addresses: 192.168.1.28:5672
+    username: guest
+    password: guest
+    connection-timeout: 15000
+    virtual-host: /
+    publisher-confirms: true #开启消息确认
+    publisher-returns: true #开去消息Return
+    template:
+      mandatory: true #交换机找不到QUEUE时，会调用Basic.Return 命令将消息返回给生产者
+    listener:
+      direct:
+        acknowledge-mode: manual
+  main:
+    allow-bean-definition-overriding: true
+
+mybatis:
+  mapper-locations: classpath:/mapping/*.xml
+  type-aliases-package: com.lqstar.model
