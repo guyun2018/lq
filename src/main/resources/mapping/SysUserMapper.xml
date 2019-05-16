@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lqstar.mapper.SysUserMapper">
+
+    <resultMap id="UserMap" type="com.lqstar.model.SysUser2" >
+        <id column="id" property="id" />
+        <result column="NAME" jdbcType="VARCHAR" property="name" />
+        <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+        <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+        <result column="AVATAR" jdbcType="VARCHAR" property="avatar" />
+        <collection property="roleList" javaType="ArrayList" ofType="com.lqstar.model.SysRole" column="{id=id}" select="selectRole">
+        </collection>
+    </resultMap>
+    <resultMap id="RoleMap" type="com.lqstar.model.SysRole" >
+        <result column="role_id" jdbcType="INTEGER" property="roleId" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+        <result column="role_desc" jdbcType="VARCHAR" property="roleDesc" />
+        <collection property="permissionList" javaType="ArrayList" ofType="com.lqstar.model.SysPermission" column="{roleId=role_id}" select="selectPermisson">
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,name,password,phone,avatar
+    </sql>
+
+    <select id="selectUserList" resultMap="UserMap">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM sys_user
+    </select>
+
+    <select id="selectRole" resultMap="RoleMap">
+        SELECT
+          t1.role_id,t1.role_name,t1.role_desc
+        FROM sys_role t1
+        LEFT JOIN sys_user_role t2 on t1.role_id = t2.role_id
+        WHERE  t2.user_id = #{id}
+    </select>
+
+    <select id="selectPermisson" resultType="com.lqstar.model.SysPermission">
+        SELECT
+          t3.id as id,t3.permission_name as permissionName,t3.permission_desc as permissionDesc
+        FROM sys_permission t3
+        LEFT JOIN sys_role_permission t4 on t3.permission_name = t4.permission_name
+        WHERE role_id = #{roleId}
+    </select>
+</mapper>
