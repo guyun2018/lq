@@ -45,7 +45,7 @@ public class LoginController {
     RedisUtil redisUtil;
 
 
-    public static final long EXPIRE = 20;
+    public static final long EXPIRE = 3600;
 
     @RequestMapping(value = "/api/login", method = RequestMethod.GET)
     public String login() {
@@ -62,8 +62,8 @@ public class LoginController {
     public Result login(@RequestBody UserBean userBean, HttpSession session, HttpServletResponse response) {
         try {
             Subject subject = SecurityUtils.getSubject();
-            UsernamePasswordToken token = new UsernamePasswordToken(userBean.getUsername(), userBean.getPassword());
-//            CustomizedToken token = new CustomizedToken(userBean.getUsername(), userBean.getPassword(), "myshirorealm");
+//            UsernamePasswordToken token = new UsernamePasswordToken(userBean.getUsername(), userBean.getPassword());
+            CustomizedToken token = new CustomizedToken(userBean.getUsername(), userBean.getPassword(), "myshirorealm");
             subject.login(token);
             User user = (User) subject.getPrincipal();
             session.setAttribute("user", user);

@@ -5,6 +5,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/lq?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+#    url: jdbc:mysql://jwcbaijehbqz.mysql.sae.sina.com.cn:10001/lq?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: lqstar
     password: lan64602361
     druid:

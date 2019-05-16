@@ -39,7 +39,8 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public User findByName(String name) {
-        return userRepository.findByName(name);
+        User byName = userRepository.findByName(name);
+        return byName;
     }
 
     @Override

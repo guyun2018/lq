@@ -54,7 +54,11 @@ public class MyShiroRealm extends AuthorizingRealm{
 //        if(authenticationToken.getPrincipal() == null){
 //            return null;
 //        }
-        User user = loginService.findByName(usernamePasswordToken.getUsername());
+//        User user = loginService.findByName(usernamePasswordToken.getUsername());
+        User user = new User();
+        user.setName("admin");
+        user.setSalt("abc");
+        user.setPassword("020202");
         if(user == null){
             throw  new AuthenticationException("用户名或密码错误");
         }
